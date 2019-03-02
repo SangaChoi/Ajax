@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+
+<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+<script type="text/javascript">
+
+function getCustomerInfo(){
+	
+	createRequest();
+	
+	var name=$("#name").val();
+	var phone=$("#phone").val();
+	var url="postJSON-orderServer.jsp";
+	
+	var queryString="name="+name+"&phone="+phone;
+
+	//alert(queryString);
+	
+	openSendRequest(url,"POST",queryString,updatePage);
+}
+
+
+function updatePage(){
+	
+	//==> readyState = 4 인경우 실행
+	if ( request.readyState ==4) {
+		
+		//== status code = 200(정상적 요청처리) 경우
+		if(request.status == 200){
+			
+ 		//request대한 응답 responseTest받기 
+ 		var serverData = request.responseText;
+ 		alert("Server에서 받은 내용 : "+serverData);
+
+ 		var JSONData=$.parseJSON(serverData);
+ 		alert("JSONData : "+JSONData);
+ 		
+ 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+ 		
+ 		$("#address").val(displayValue);
+
+	
+		}else{
+			alert("에러 발생 : "+request.status);
+		}
+	}
+}
+
+$(function(){
+	$("textarea").on("click",function(){
+		getCustomerInfo();
+	});
+	$("form")[0].reset();
+});
+</script>
+
+</head>
+
+<body>
+
+	<form>
+	
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp; 름  :  
+				<input type="text" size="14" name="name"  id ="name"/>
+		</p>
+		
+		<p>전화번호 :  
+				<input type="text" size="14" name="phone"  id="phone"/>
+		</p>
+	
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp; 소 : </p>  
+	
+		<p>
+			<textarea 	rows="3" cols="50" name="address" id="address" >이름을 입력후 :: 여기에click...</textarea>	
+		</p>
+				
+		<p id="testInnerHtml"><input type="submit" value="주문하기" id="submit"/></p>
+		
+	</form>
+	
+</body>
+
+</html>

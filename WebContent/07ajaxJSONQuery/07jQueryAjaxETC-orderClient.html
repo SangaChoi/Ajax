@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+
+<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+<!--<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>-->
+<script type="text/javascript">
+
+function use_ajax_option(){
+	
+	alert("use_ajax_option");
+	
+	$.ajax(
+			{
+				url:"postJSON-orderServer.jsp",
+				method:"POST",
+				data:{
+					name:$("#name").val(),
+					phone:$("#phone").val()
+				},
+				dataType:"json",
+				success:function(JSONData,status){
+					alert(status);
+			 		alert("JSONData : "+JSONData);
+			 		
+			 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+			 		
+			 		$("#address").val(displayValue);
+					
+				}
+				
+			});
+}
+
+function use_ajax_url_option(){
+	
+	alert("use_ajax_url_option");
+	
+	$.ajax("postJSON-orderServer.jsp",
+			{
+				method:"POST",
+				data:{
+					name:$("#name").val(),
+					phone:$("#phone").val()
+				},
+				dataType:"json",
+				success:function(JSONData,status){
+					alert(status);
+			 		alert("JSONData : "+JSONData);
+			 		
+			 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+			 		
+			 		$("#address").val(displayValue);
+					
+				}
+				
+			});
+}
+
+function use_getJSON(){
+	
+	alert("use_getJSON");
+	
+	$.getJSON("postJSON-orderServer.jsp",
+			{
+					name:$("#name").val(),
+					phone:$("#phone").val()
+			},
+			function(JSONData,status){
+					alert(status);
+			 		alert("JSONData : "+JSONData);
+			 		
+			 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+			 		
+			 		$("#address").val(displayValue);
+					
+			}
+				
+	);
+}
+
+function use_post(){
+	
+	alert("use_post");
+	
+	$.post("postJSON-orderServer.jsp",
+			{
+					name:$("#name").val(),
+					phone:$("#phone").val()
+			},
+			function(serverData,status){
+					alert(status);
+					alert("Server에서 받은 내용 : "+serverData);
+				
+					var JSONData=$.parseJSON(serverData);
+			 		alert("JSONData : "+JSONData);
+			 		
+			 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+			 		
+			 		$("#address").val(displayValue);
+					
+			}
+				
+	);
+}
+
+function use_get(){
+	
+	alert("use_get");
+	
+	$.get("postJSON-orderServer.jsp",
+			{
+					name:$("#name").val(),
+					phone:$("#phone").val()
+			},
+			function(serverData,status){
+					alert(status);
+					alert("Server에서 받은 내용 : "+serverData);
+				
+					var JSONData=$.parseJSON(serverData);
+			 		alert("JSONData : "+JSONData);
+			 		
+			 		var displayValue="이름 : "+JSONData.name+" 전화 : "+JSONData.phone+" 주소 : "+JSONData.address;
+			 		
+			 		$("#address").val(displayValue);
+					
+			}
+				
+	);
+}
+
+
+$(function(){
+	$("textarea").on("click",function(){
+		use_ajax_option();
+		//use_ajax_url_option();
+		//use_getJSON();
+		//use_post();
+		//use_get();
+	});
+	$("form")[0].reset();
+});
+</script>
+
+</head>
+
+<body>
+
+	<form>
+	
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp; 름  :  
+				<input type="text" size="14" name="name"  id ="name"/>
+		</p>
+		
+		<p>전화번호 :  
+				<input type="text" size="14" name="phone"  id="phone"/>
+		</p>
+	
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp; 소 : </p>  
+	
+		<p>
+			<textarea 	rows="3" cols="50" name="address" id="address" >이름을 입력후 :: 여기에click...</textarea>	
+		</p>
+				
+		<p id="testInnerHtml"><input type="submit" value="주문하기" id="submit"/></p>
+		
+	</form>
+	
+</body>
+
+</html>
